@@ -23,7 +23,6 @@ type UserService struct {
 
 type UserGetCall struct {
 	service *UserService
-	id      string
 }
 
 func NewUserService(client *Client) *UserService {
