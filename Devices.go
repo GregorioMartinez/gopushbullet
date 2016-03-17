@@ -16,7 +16,8 @@ type Device struct {
 	Nickname     string  `json:"nickname"`
 	PushToken    string  `json:"push_token"`
 }
-type Response struct {
+
+type DeviceResponse struct {
 	Devices []Device `json:"devices"`
 }
 
@@ -44,7 +45,7 @@ func (c *DeviceListCall) Do() (*[]Device, error) {
 		return nil, err
 	}
 
-	var d Response
+	var d DeviceResponse
 	err = json.Unmarshal(data, &d)
 	if err != nil {
 		return nil, err
