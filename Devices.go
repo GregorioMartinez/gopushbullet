@@ -92,9 +92,38 @@ func (c *DeviceUpdateCall) Nickname(name string) *DeviceUpdateCall {
 	return c
 }
 
+func (c *DeviceUpdateCall) Model(model string) *DeviceUpdateCall {
+	c.args["model"] = model
+	return c
+}
+
+func (c *DeviceUpdateCall) Manufacturer(manufacturer string) *DeviceUpdateCall {
+	c.args["manufacturer"] = manufacturer
+	return c
+}
+
+func (c *DeviceUpdateCall) PushToken(push_token string) *DeviceUpdateCall {
+	c.args["push_token"] = push_token
+	return c
+}
+
+func (c *DeviceUpdateCall) AppVersion(app_version int) *DeviceUpdateCall {
+	c.args["app_version"] = app_version
+	return c
+}
+
+func (c *DeviceUpdateCall) Icon(icon string) *DeviceUpdateCall {
+	c.args["icon"] = icon
+	return c
+}
+
+func (c *DeviceUpdateCall) HasSMS(has_sms bool) *DeviceUpdateCall {
+	c.args["has_sms"] = has_sms
+	return c
+}
+
 func (c *DeviceUpdateCall) Do() (*Device, error) {
 
-	// This third arg should not be nil, it should read the args.
 	data, err := c.service.client.run("POST", "devices/"+c.iden, c.args)
 	if err != nil {
 		return nil, err
