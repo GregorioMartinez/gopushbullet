@@ -59,9 +59,41 @@ type DeviceCreateCall struct {
 	args    map[string]interface{}
 }
 
-// Required go in as params.
-// Optional are additional methods
-//@TODO - Contact them about this?
+func (c *DeviceCreateCall) Nickname(name string) *DeviceCreateCall {
+	c.args["nickname"] = name
+	return c
+}
+
+func (c *DeviceCreateCall) Model(model string) *DeviceCreateCall {
+	c.args["model"] = model
+	return c
+}
+
+func (c *DeviceCreateCall) Manufacturer(manufacturer string) *DeviceCreateCall {
+	c.args["manufacturer"] = manufacturer
+	return c
+}
+
+func (c *DeviceCreateCall) PushToken(push_token string) *DeviceCreateCall {
+	c.args["push_token"] = push_token
+	return c
+}
+
+func (c *DeviceCreateCall) AppVersion(app_version int) *DeviceCreateCall {
+	c.args["app_version"] = app_version
+	return c
+}
+
+func (c *DeviceCreateCall) Icon(icon string) *DeviceCreateCall {
+	c.args["icon"] = icon
+	return c
+}
+
+func (c *DeviceCreateCall) HasSMS(has_sms bool) *DeviceCreateCall {
+	c.args["has_sms"] = has_sms
+	return c
+}
+
 func (s *DeviceService) Create() *DeviceCreateCall {
 
 	call := &DeviceCreateCall{
@@ -70,6 +102,22 @@ func (s *DeviceService) Create() *DeviceCreateCall {
 	}
 
 	return call
+}
+
+func (c *DeviceCreateCall) Do() (*Device, error) {
+
+	data, err := c.service.client.run("POST", "devices", c.args)
+	if err != nil {
+		return nil, err
+	}
+
+	var d Device
+	err = json.Unmarshal(data, &d)
+	if err != nil {
+		return nil, err
+	}
+
+	return &d, nil
 }
 
 type DeviceUpdateCall struct {
