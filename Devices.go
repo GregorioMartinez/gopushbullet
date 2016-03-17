@@ -137,3 +137,25 @@ func (c *DeviceUpdateCall) Do() (*Device, error) {
 
 	return &d, nil
 }
+
+type DeviceDeleteCall struct {
+	service *DeviceService
+	iden    string
+}
+
+func (s *DeviceService) Delete(iden string) *DeviceDeleteCall {
+	call := &DeviceDeleteCall{
+		service: s,
+		iden:    iden,
+	}
+	return call
+}
+
+func (c *DeviceDeleteCall) Do() error {
+
+	_, err := c.service.client.run("DELETE", "devices/"+c.iden, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
