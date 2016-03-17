@@ -1,13 +1,12 @@
 package gopushbullet
 
 import (
-	// "bytes"
-	// "encoding/json"
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 const basePath = "https://api.pushbullet.com/"
@@ -25,15 +24,20 @@ func (client *Client) run(method, path string, params map[string]interface{}) ([
 		values.Set(k, fmt.Sprintf("%v", v))
 	}
 
-	fmt.Println(values)
-
 	var req *http.Request
 	if method == "POST" {
-		req, err = http.NewRequest("POST", basePath+version+path, strings.NewReader(values.Encode()))
+		j, err := json.Marshal(params)
+		if err != nil {
+			panic(err)
+		}
+
+		r := bytes.NewBuffer(j)
+		req, err = http.NewRequest("POST", basePath+version+path, r)
 		if err != nil {
 			return nil, err
 		}
 		req.Header.Set("Content-Type", "application/json")
+
 	} else {
 		req, err = http.NewRequest(method, basePath+version+path+"?"+values.Encode(), nil)
 		if err != nil {
