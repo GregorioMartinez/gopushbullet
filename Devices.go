@@ -1,6 +1,5 @@
 package gopushbullet
 
-// Switch from panic to log
 import (
 	"encoding/json"
 )
