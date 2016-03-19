@@ -45,8 +45,6 @@ func (client *Client) run(method, path string, params map[string]interface{}) ([
 		}
 	}
 
-	fmt.Println(basePath + version + path)
-
 	resp, err := client.client.Do(req)
 	if err != nil {
 		panic(err)
@@ -58,8 +56,6 @@ func (client *Client) run(method, path string, params map[string]interface{}) ([
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Printf("%s", body)
 
 	return body, err
 }
