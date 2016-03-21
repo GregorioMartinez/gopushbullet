@@ -52,6 +52,9 @@ func (client *Client) run(method, path string, params map[string]interface{}) ([
 
 	defer resp.Body.Close()
 
+	// @TODO Check response code, return error instead of response this way
+	fmt.Println(resp.StatusCode)
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
