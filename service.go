@@ -13,7 +13,7 @@ const basePath = "https://api.pushbullet.com/"
 const version = "v2/"
 
 type Client struct {
-	client *http.Client
+	Client *http.Client
 }
 
 func (client *Client) run(method, path string, params map[string]interface{}) ([]byte, error) {
@@ -45,7 +45,7 @@ func (client *Client) run(method, path string, params map[string]interface{}) ([
 		}
 	}
 
-	resp, err := client.client.Do(req)
+	resp, err := client.Client.Do(req)
 	if err != nil {
 		panic(err)
 	}
