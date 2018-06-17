@@ -52,12 +52,25 @@ func (client *Client) run(method, path string, params map[string]interface{}) ([
 
 	defer resp.Body.Close()
 
-	// @TODO Check response code, return error instead of response this way
-	fmt.Println(resp.StatusCode)
+	/*
+		200 OK - Everything worked as expected.
+		400 Bad Request - Usually this results from missing a required parameter.
+		401 Unauthorized - No valid access token provided.
+		403 Forbidden - The access token is not valid for that request.
+		404 Not Found - The requested item doesn't exist.
+		429 Too Many Requests - You have been ratelimited for making too many requests to the server.
+		5XX Server Error
+	*/
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		var err ErrorResp
+		json.Unmarshal(body, &err)
+		return nil, err.Error
 	}
 
 	return body, err
